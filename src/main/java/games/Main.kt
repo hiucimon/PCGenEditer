@@ -1,4 +1,4 @@
-package sample2
+package org.hiucimon.games
 
 import javafx.scene.control.Label
 import javafx.scene.control.ListView
