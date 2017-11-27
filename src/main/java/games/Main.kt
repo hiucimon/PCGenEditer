@@ -1,9 +1,7 @@
 package org.hiucimon.games
 
-import javafx.scene.control.Label
-import javafx.scene.control.ListView
-import javafx.scene.control.ScrollPane
-import javafx.scene.control.TextField
+import javafx.collections.FXCollections.observableArrayList
+import javafx.scene.control.*
 import tornadofx.*
 import java.io.File
 
@@ -18,6 +16,8 @@ class Main : View() {
     val tf: TextField by fxid()
     val myLabel: Label by fxid()
     val gameModes: ListView<String> by fxid()
+    val gameModeTable: TableView<pccInfo> by fxid()
+    val gameModeCollection=observableArrayList<pccInfo>()
     var base= File(defaultLocation)
     init {
 //        myLabel.text = tf.text
@@ -26,6 +26,22 @@ class Main : View() {
                 tf.text = defaultLocation
             }
             loadGameModes()
+            gameModeTable.column("Game Mode",pccInfo::gameMode)
+            gameModeTable.column("Canpain",pccInfo::campaign)
+            gameModeTable.column("Rank",pccInfo::rank)
+            gameModeTable.column("Genre",pccInfo::genre)
+            gameModeTable.column("Setting",pccInfo::setting)
+            gameModeTable.column("Pub Long",pccInfo::pubNameLong)
+            gameModeTable.column("Pub Short",pccInfo::pubNameShort)
+            gameModeTable.column("Pub Web",pccInfo::pubNameWeb)
+            gameModeTable.column("Source Long",pccInfo::sourceLong)
+            gameModeTable.column("Source Short",pccInfo::sourceShort)
+            gameModeTable.column("Source Web",pccInfo::sourceWeb)
+            gameModeTable.column("Source Date",pccInfo::sourceDate)
+            gameModeTable.column("ISO GL",pccInfo::isoGL)
+            gameModeTable.column("Copywrite",pccInfo::copywrite)
+            gameModeTable.column("File Name",pccInfo::fileName)
+
         }
     }
     fun onClick() {
@@ -43,14 +59,18 @@ class Main : View() {
     }
     fun loadGameModes() {
         gameModes.items.clear()
+        gameModeCollection.clear()
         val work= sortedSetOf<String>()
         base.walkBottomUp().forEach {
             if (it.name.endsWith(".pcc")) {
                 val res=parsePCCHeader(it)
                 work.add(res.toString())
+                gameModeCollection.add(res)
             }
         }
+        gameModeTable.items.clear()
         gameModes.items.addAll(work)
+        gameModeTable.items.addAll(gameModeCollection)
     }
     fun parsePCCHeader(fin:File):pccInfo {
         val lookfor=hashMapOf<String,Int>("CAMPAIGN" to 0,

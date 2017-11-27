@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -15,6 +16,7 @@
                   <TextField fx:id="tf" layoutX="80.0" layoutY="17.0" onKeyReleased="#checkBaseDir" prefHeight="27.0" prefWidth="348.0" promptText="Base Directory" text="/Users/joe/Downloads/pcgen2/data" />
                   <Button layoutX="26.0" layoutY="593.0" mnemonicParsing="false" onAction="#onClick" text="Button" />
             <ListView id="gameModes" fx:id="gameModes" layoutX="26.0" layoutY="69.0" prefHeight="170.0" prefWidth="628.0" />
+            <TableView fx:id="gameModeTable" layoutX="26.0" layoutY="264.0" prefHeight="200.0" prefWidth="626.0" styleClass="pccInfo::gameMode" />
                </children>
             </AnchorPane>
         </content>
